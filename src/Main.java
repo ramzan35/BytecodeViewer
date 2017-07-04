@@ -24,7 +24,11 @@ public class Main {
                 // This ZipEntry represents a class. Now, what class does it represent?
                 className = entry.getName().replace('/', '.'); // including ".class"
                 Class c = Class.forName(className.substring(0, className.length() - ".class".length()));
+
+
+                System.out.print("Class name : ");
                 System.out.println(c);
+                System.out.println();
 
                 /*String[] test = className.split("/");
 //                classNames.add(className.substring(0, className.length() - ".class".length()));
@@ -38,25 +42,30 @@ public class Main {
                  *this method is for reading all the methods in a class
                  */
 
+                System.out.print("method names : ");
                 try {
 //                    Class c = Class.forName(className);
                     Method[] m = c.getDeclaredMethods();
-                    for (int i = 0; i < m.length; i++)
+                    for (int i = 0; i < m.length; i++) {
                         System.out.println(m[i].toString());
+                        System.out.print("               ");
+                    }
                 } catch (Throwable e) {
                     System.err.println(e);
                 }
+                System.out.println();
 
 
                 /*
                  *this method is for reading the superclass
                  */
 
+                System.out.print("Super classes : ");
 //                Class c1 = className.getClass();
-//                while (className != null) {
-//                    System.out.println(className.getClass().getName());
-//                    className = className.getClass().getSuperclass();
-//                }
+                while (c != null) {
+                    System.out.println(c);
+                    c = c.getSuperclass();
+                }
 
                 break;
             }
