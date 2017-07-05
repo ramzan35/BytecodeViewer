@@ -31,7 +31,7 @@ public class Main {
                 if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
                     // This ZipEntry represents a class. Now, what class does it represent?
                     className = entry.getName().replace('/', '.'); // including ".class"
-
+                    System.out.println("This is the class name : "+className);
                     Class c=null;
                     try {
                         c = Class.forName(className.substring(0, className.length() - ".class".length()));
