@@ -1,6 +1,7 @@
 /**
  * Created by MRamzan on 7/5/2017.
- */
+ *//*
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -15,16 +16,20 @@ import org.objectweb.asm.Opcodes;
 
 public class ASMHelloWorld {
 
-    /**
+    */
+/**
      * @param args
      * @throws IOException
-     */
-    public static void main(String[] args) throws IOException {
-        ClassVisitor cl=new ClassVisitor(Opcodes.ASM4) {
+     *//*
 
-            /**
+    public static void main(String[] args) throws IOException {
+        ClassVisitor cl=new ClassVisitor(Opcodes.ASM5) {
+
+            */
+/**
              * Called when a class is visited. This is the method called first
-             */
+             *//*
+
             @Override
             public void visit(int version, int access, String name,
                               String signature, String superName, String[] interfaces) {
@@ -34,18 +39,22 @@ public class ASMHelloWorld {
                 super.visit(version, access, name, signature, superName, interfaces);
             }
 
-            /**
+            */
+/**
              * Invoked only when the class being visited is an inner class
-             */
+             *//*
+
             @Override
             public void visitOuterClass(String owner, String name, String desc) {
                 System.out.println("Outer class: "+owner);
                 super.visitOuterClass(owner, name, desc);
             }
 
-            /**
+            */
+/**
              *Invoked when a class level annotation is encountered
-             */
+             *//*
+
             @Override
             public AnnotationVisitor visitAnnotation(String desc,
                                                      boolean visible) {
@@ -53,18 +62,22 @@ public class ASMHelloWorld {
                 return super.visitAnnotation(desc, visible);
             }
 
-            /**
+            */
+/**
              * When a class attribute is encountered
-             */
+             *//*
+
             @Override
             public void visitAttribute(Attribute attr) {
                 System.out.println("Class Attribute: "+attr.type);
                 super.visitAttribute(attr);
             }
 
-            /**
+            */
+/**
              *When an inner class is encountered
-             */
+             *//*
+
             @Override
             public void visitInnerClass(String name, String outerName,
                                         String innerName, int access) {
@@ -72,9 +85,11 @@ public class ASMHelloWorld {
                 super.visitInnerClass(name, outerName, innerName, access);
             }
 
-            /**
+            */
+/**
              * When a field is encountered
-             */
+             *//*
+
             @Override
             public FieldVisitor visitField(int access, String name,
                                            String desc, String signature, Object value) {
@@ -89,9 +104,11 @@ public class ASMHelloWorld {
                 super.visitEnd();
             }
 
-            /**
+            */
+/**
              * When a method is encountered
-             */
+             *//*
+
             @Override
             public MethodVisitor visitMethod(int access, String name,
                                              String desc, String signature, String[] exceptions) {
@@ -99,9 +116,11 @@ public class ASMHelloWorld {
                 return super.visitMethod(access, name, desc, signature, exceptions);
             }
 
-            /**
+            */
+/**
              * When the optional source is encountered
-             */
+             *//*
+
             @Override
             public void visitSource(String source, String debug) {
                 System.out.println("Source: "+source);
@@ -117,3 +136,4 @@ public class ASMHelloWorld {
     }
 
 }
+*/

@@ -1,3 +1,9 @@
+/**
+ * Created by MRamzan on 7/11/2017.
+ */
+
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -5,43 +11,58 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.BitSet;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Main {
+/**
+ * Created by MRamzan on 7/11/2017.
+ */
 
-    static String className;
+public class Test {
 
-    public static void main(String[] args) throws Exception {
+    private static String className;
 
-        List<String> classNames = new ArrayList<String>();
-        ZipInputStream zip = new ZipInputStream(new FileInputStream("C:\\Users\\MRamzan\\Downloads\\jarFiles\\asmdemo-master\\asmdemo-master\\asm-all-3.3.1.jar"));
-        for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
-            if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
-                // This ZipEntry represents a class. Now, what class does it represent?
-                className = entry.getName().replace('/', '.'); // including ".class"
-                Class cs = Class.forName(className.substring(0, className.length() - ".class".length()));
-//                System.out.println(cs);
+    public static void main(String[] args) {
 
-                try {
-                    // Get dependencies for my class:
-                    Set<Class<?>> dependencies = getDependencies(cs);  // REPLACE WITH YOUR CLASS NAME
-
-                    // Print the full class name for each interesting dependency:
-                    dependencies.stream().filter(clazz -> !clazz.getCanonicalName().startsWith(
-                            "java")) // do not show java.lang dependencies,
-                            // which add clutter
-                            .forEach(c -> System.out.println(c.getCanonicalName()));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-            }
+        ZipInputStream zip = null;
+        try {
+            zip = new ZipInputStream(new FileInputStream("C:\\Users\\MRamzan\\Downloads\\jarFiles\\ASM-BO.jar"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+        try {
+            for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
+                if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
+                    className = entry.getName().replace('/', '.'); // including ".class"
+                    System.out.println("This is the class name : " + className);
 
+
+                    try {
+                        // Get dependencies for my class:
+                        Class cs = Class.forName(className.substring(0, className.length() - ".class".length()));
+                        Set<Class<?>> dependencies = getDependencies(cs);  // REPLACE WITH YOUR CLASS NAME
+
+                        // Print the full class name for each interesting dependency:
+                        System.out.println("Depended classes : ");
+                        dependencies.stream().filter(clazz -> !clazz.getCanonicalName().startsWith(
+                                "java")) // do not show java.lang dependencies,
+                                // which add clutter
+                                .forEach(c -> System.out.println(c.getCanonicalName()));
+                    } catch (ClassNotFoundException e) {
+//                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+        } catch (Exception e) {
+
+        }
     }
+
 
     /**
      * Get the set of direct dependencies for the given class
@@ -153,8 +174,7 @@ public class Main {
 
     /**
      * @param readBuffer
-     * @param numberOfConstants
-    //     * @param isNamedType
+     * @param numberOfConstants //     * @param isNamedType
      * @return
      * @throws AssertionError
      */
@@ -198,9 +218,8 @@ public class Main {
     }
 
     /**
-     * @param readBuffer
-    //     * @param isClass
-    //     * @param isNamedType
+     * @param readBuffer           //     * @param isClass
+     *                             //     * @param isNamedType
      * @param dependencyClassNames
      * @param constantNumber
      */
@@ -253,9 +272,8 @@ public class Main {
     }
 
     /**
-     * @param readBuffer
-    //     * @param isClass
-    //     * @param isNamedType
+     * @param readBuffer           //     * @param isClass
+     *                             //     * @param isNamedType
      * @param currentConstantIndex
      * @return
      */
